@@ -1,0 +1,36 @@
+﻿<html>
+<head>
+<script language="javascript" type="text/javascript">
+function doReplace(range,offset) {
+	re = new RegExp(range, "g");
+	return this.replace(re,function(c) { if ((offset == 9263) && (c == 0)) { return '&#9450;' }; return '&#' + (c.charCodeAt(0) + (offset)) + ';'; });
+}
+String.prototype.doReplace=doReplace;
+function unicodeReplace() {
+	var strBase		= new String(document.form.txtInput.value);
+	var strFullWidth	= strBase.doReplace('[!-~]',65248);
+	var strReverse		= '\u202E'+strBase+'\u202D\u202A\u202E\u202A\u202B\u202A\u202E\u202A\u202A\u202C\u202C\u202C\u202C\u202D';
+	var strBold		= strBase.doReplace('[0-9]',(120782-48)).doReplace('[A-Z]',(119808-65)).doReplace('[a-z]',(119834-97));
+	var strItalics		= strBase.doReplace('[A-Z]',(119860-65)).doReplace('(?!h)[a-z]',(119886-97)).replace(/h/g,'\u210E');
+	var strBoldItal		= strBase.doReplace('[A-Z]',(119912-65)).doReplace('[a-z]',(119938-97));
+	var strScript		= strBase.doReplace('(?![BEFHILMR])[A-Z]',(119964-65)).doReplace('(?![ego])[a-z]',(119990-97)).replace(/B/g,'\u212C').replace(/E/g,'\u2130').replace(/F/g,'\u2131').replace(/H/g,'\u210B').replace(/I/g,'\u2110').replace(/L/g,'\u2112').replace(/M/g,'\u2133').replace(/R/g,'\u211B').replace(/e/g,'\u212F').replace(/g/g,'\u210A').replace(/o/g,'\u2134');
+	var strBoldScr		= strBase.doReplace('[A-Z]',(120016-65)).doReplace('[a-z]',(120042-97));
+	var strFraktur		= strBase.doReplace('(?![CHIRZ])[A-Z]',(120068-65)).doReplace('[a-z]',(120094-97)).replace(/C/g,'\u212D').replace(/H/g,'\u210C').replace(/I/g,'\u2111').replace(/R/g,'\u211C').replace(/Z/g,'\u2128');
+	var strBoldFrak		= strBase.doReplace('[A-Z]',(120172-65)).doReplace('[a-z]',(120198-97));
+	var strDouble		= strBase.doReplace('[0-9]',(120792-48)).doReplace('(?![CHNPQRZ])[A-Z]',(120120-65)).doReplace('[a-z]',(120146-97)).replace(/C/g,'\u2102').replace(/H/g,'\u210D').replace(/N/g,'\u2115').replace(/P/g,'\u2119').replace(/Q/g,'\u211A').replace(/R/g,'\u211D').replace(/Z/g,'\u2124');
+	var strSansSer		= strBase.doReplace('[0-9]',(120802-48)).doReplace('[A-Z]',(120224-65)).doReplace('[a-z]',(120250-97));
+	var strSansBold		= strBase.doReplace('[0-9]',(120812-48)).doReplace('[A-Z]',(120276-65)).doReplace('[a-z]',(120302-97));
+	var strSansItal		= strBase.doReplace('[A-Z]',(120328-65)).doReplace('[a-z]',(120354-97));
+	var strSansBoldItal	= strBase.doReplace('[A-Z]',(120380-65)).doReplace('[a-z]',(120406-97));
+	var strMonospace	= strBase.doReplace('[A-Z]',(120432-65)).doReplace('[a-z]',(120458-97));
+	var strCircled		= strBase.doReplace('[0-9]',(9311-48)).doReplace('[A-Z]',(9398-65)).doReplace('[a-z]',(9424-97));		
+	var strStrikeout	= strBase.replace(/([\w\s])/g,'\u0336$1') + '\u0336';
+	document.getElementById('text').innerHTML = '<tr><td>'+strFullWidth+'</td></tr><tr><td>'+strReverse+'</td></tr><tr><td>'+strBold+'</td></tr><tr><td>'+strItalics+'</td></tr><tr><td>'+strBoldItal+'</td></tr><tr><td>'+strScript+'</td></tr><tr><td>'+strBoldScr+'</td></tr><tr><td>'+strFraktur+'</td></tr><tr><td>'+strBoldFrak+'</td></tr><tr><td>'+strDouble+'</td></tr><tr><td>'+strSansSer+'</td></tr><tr><td>'+strSansBold+'</td></tr><tr><td>'+strSansItal+'</td></tr><tr><td>'+strSansBoldItal+'</td></tr><tr><td>'+strMonospace+'</td></tr><tr><td>'+strCircled+'</td></tr><tr><td>'+strStrikeout+'</tr></td>';
+}
+</script>
+</head>
+<body>
+<form name="form">
+<textarea style="width: 400px; height: 100px" name="txtInput" onKeyUp="unicodeReplace()"></textarea><p>
+<table id="text"><tr><td>Sample Text</td></tr></table>
+</body></html>
